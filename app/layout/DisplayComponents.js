@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+<<<<<<< HEAD
 
 // Outer structure of the calculator
 export const Calculator = styled.div`
@@ -67,3 +68,17 @@ export const DisplayFormula = styled.p`
   right: 10px;
   margin: 0;
 `;
+=======
+import theme from './theme';
+
+// Outer structure of the calculator
+export const Calculator = styled.div`
+  display: flex;
+  border: theme.colors.background;
+  height: 80vh;
+  width: 40vh;
+  border-color: ${theme.colors.border};
+`;
+
+export const display = styled.div;
+>>>>>>> WIP Switch context
