@@ -5,8 +5,9 @@ import { render } from 'react-dom';
 
 // Redux imports
 import { Provider } from 'react-redux';
+import { store } from './store';
 // #endregion
 
-const app = '';
+const app = <Provider store={store} />;
 
 render(app, document.getElementById('app'));

@@ -1,19 +1,17 @@
-var Jasmine = require("jasmine");
-var SpecReporter = require("jasmine-spec-reporter").SpecReporter;
+const Jasmine = require('jasmine');
+const SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 
-var jasmine = new Jasmine();
+const jasmine = new Jasmine();
 
 jasmine.configureDefaultReporter({
-  print: function() {}
+  print() {},
 });
 
-jasmine.addReporter(
-  new SpecReporter({
-    spec: {
-      displayPending: true
-    }
-  })
-);
+jasmine.addReporter(new SpecReporter({
+  spec: {
+    displayPending: true,
+  },
+}));
 
-jasmine.loadConfigFile("./spec/support/jasmine.json");
+jasmine.loadConfigFile('./spec/support/jasmine.json');
 jasmine.execute();
