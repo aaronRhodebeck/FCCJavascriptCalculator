@@ -48,7 +48,10 @@ export const Display = styled.div`
   margin: 5px;
   background: radial-gradient(at top left, #ddd, #eee);
   position: relative;
+<<<<<<< HEAD
   overflow: hidden;
+=======
+>>>>>>> Add result and formula basic layout component, layout finished
 `;
 
 export const DisplayResult = styled.p`
@@ -68,6 +71,7 @@ export const DisplayFormula = styled.p`
   top: 5%;
   right: 10px;
   margin: 0;
+<<<<<<< HEAD
 `;
 =======
 import theme from './theme';
@@ -123,5 +127,7 @@ export const Display = styled.div`
   border: 3px inset darkgray;
   margin: 5px;
   background: radial-gradient(at top left, #ddd, #eee);
+=======
+>>>>>>> Add result and formula basic layout component, layout finished
 `;
 >>>>>>> Create grayscale layout of calculator

@@ -18,7 +18,14 @@ const app = (
 import { store } from './store';
 
 // Calculator imports
-import { Calculator, CalcButton, ButtonArea, Display } from './layout/DisplayComponents';
+import {
+  Calculator,
+  CalcButton,
+  ButtonArea,
+  Display,
+  DisplayResult,
+  DisplayFormula,
+} from './layout/DisplayComponents';
 // #endregion
 
 const app = (
@@ -28,7 +35,10 @@ const app = (
 >>>>>>> WIP Switch context
 =======
     <Calculator>
-      <Display />
+      <Display>
+        <DisplayFormula>10 + 20 - 4 * 27 / 5</DisplayFormula>
+        <DisplayResult>10098</DisplayResult>
+      </Display>
       <ButtonArea>
         <CalcButton />
         <CalcButton />
