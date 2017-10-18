@@ -41,4 +41,15 @@ describe('Action Creators', () => {
     };
     expect(actions.clearAll()).toEqual(expectedAction);
   });
+  it('should contain a "parenthesis was pressed" action', () => {
+    const parentheses = ['(', ')'];
+    for (let i = 0, len = parentheses.length; i < len; i++) {
+      const paren = parentheses[i];
+      const expectedAction = {
+        type: 'PAREN_PRESSED',
+        paren,
+      };
+      expect(actions.parenWasPressed(paren)).toEqual(expectedAction);
+    }
+  });
 });
