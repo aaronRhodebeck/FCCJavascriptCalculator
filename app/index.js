@@ -18,13 +18,33 @@ const app = (
 import { store } from './store';
 
 // Calculator imports
-import { Calculator } from './layout/DisplayComponents';
+import { Calculator, CalcButton, ButtonArea, Display } from './layout/DisplayComponents';
 // #endregion
 
 const app = (
   <Provider store={store}>
+<<<<<<< HEAD
     <Calculator />
 >>>>>>> WIP Switch context
+=======
+    <Calculator>
+      <Display />
+      <ButtonArea>
+        <CalcButton />
+        <CalcButton />
+        <CalcButton />
+        <CalcButton />
+        <CalcButton />
+        <CalcButton />
+        <CalcButton />
+        <CalcButton />
+        <CalcButton />
+        <CalcButton />
+        <CalcButton />
+        <CalcButton />
+      </ButtonArea>
+    </Calculator>
+>>>>>>> Create grayscale layout of calculator
   </Provider>
 );
 
