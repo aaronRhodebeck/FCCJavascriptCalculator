@@ -3,6 +3,7 @@ import * as actions from '../app/actions/actionCreators';
 import digits from '../app/reducers/digits';
 import calculateTotal from '../app/reducers/calculateTotal';
 import operators from '../app/reducers/operators';
+import period from '../app/reducers/period';
 
 describe('Action Creators', () => {
   it('should contain a "digit was pressed" action which contains the digit', () => {
@@ -56,6 +57,10 @@ describe('Action Creators', () => {
       expect(actions.parenWasPressed(paren)).toEqual(expectedAction);
     }
   });
+  it('should contain a "period was pressed" action', () => {
+    const expectedAction = { type: 'PERIOD_PRESSED' };
+    expect(actions.periodWasPressed()).toEqual(expectedAction);
+  });
 });
 
 describe('Reducers', () => {
@@ -67,6 +72,7 @@ describe('Reducers', () => {
   const digitPressed = { type: 'DIGIT_PRESSED', digit: 8 };
   const plusPressed = { type: 'OPERATOR_PRESSED', operator: '+' };
   const dividePressed = { type: 'OPERATOR_PRESSED', operator: '/' };
+  const periodPressed = { type: 'PERIOD_PRESSED' };
 
   describe('calculateTotal()', () => {
     it('should return undefined if there are no operators', () => {
@@ -124,6 +130,29 @@ describe('Reducers', () => {
     });
     it('should return the same total', () => {
       expect(operators(smallFormulaStore, dividePressed).currentTotal).toEqual(smallFormulaStore.currentTotal);
+    });
+  });
+
+  describe('period()', () => {
+    it('should return an empty object if the store is empty and the type is not "PERIOD_PRESSED', () => {
+      expect(period(emptyStore, digitPressed)).toEqual({});
+    });
+    it('should return the same object if the type is not "PERIOD_PRESSED"', () => {
+      expect(period(smallFormulaStore, digitPressed)).toEqual(smallFormulaStore);
+    });
+    it('should return the formula with a decimal point appended if the last entry is an integer', () => {
+      expect(period(smallFormulaStore, periodPressed).formula).toEqual(smallFormulaStore.formula.concat('.'));
+    });
+    it('should add a 0 and a decimal point if the store is empty', () => {
+      expect(period(emptyStore, periodPressed).formula).toEqual('0.');
+    });
+    it('should add a 0 and a decimal point if the last entry is an operator', () => {
+      const store = { formula: '10-5+12*', currentTotal: 17 };
+      expect(period(store, periodPressed).formula).toEqual(store.formula.concat('0.'));
+    });
+    it('should not add a decimal point if the last entry is a decimal number', () => {
+      const store = { formula: '1+2+4.5', currentTotal: 7.5 };
+      expect(period(store, periodPressed).formula).toEqual(store.formula);
     });
   });
 });
