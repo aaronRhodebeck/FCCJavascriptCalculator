@@ -82,6 +82,18 @@ describe('Reducers', () => {
     it('should return the quotient of two numbers if there is a single /', () => {
       expect(calculateTotal('12/4')).toEqual(3);
     });
+    it('should return the correct total from a formula with basic arithmatic, ignoring the order of operations', () => {
+      expect(calculateTotal('10/5*2+20-10')).toEqual(14);
+    });
+    it('should return a decimal number when necessary', () => {
+      expect(calculateTotal('5/2')).toEqual(2.5);
+    });
+    it('should accept a decimal number and return the correct total', () => {
+      expect(calculateTotal('2.5*10')).toEqual(25);
+    });
+    it('should accept a negative number as the first number and return the correct total', () => {
+      expect(calculateTotal('-2*5')).toEqual(-10);
+    });
   });
 
   describe('digits()', () => {

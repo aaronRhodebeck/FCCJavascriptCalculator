@@ -13,23 +13,38 @@ const performOperation = (number, currentTotal, operator) => {
   }
 };
 
+const splitOnNonNumbers = (str) => {
+  const nonDigitsOrDecimalPoint = /([^0-9.])/;
+  return str.split(nonDigitsOrDecimalPoint);
+};
+
+const createArray = (formulaAsString) => {
+  let formulaAsArray = splitOnNonNumbers(formulaAsString);
+  formulaAsArray = handleLeadingMinusSign();
+};
+
 const calculateTotal = (formulaString) => {
-  const nonDigits = /([^0-9])/;
-  const formulaArray = formulaString.split(nonDigits);
+  const formulaArray = createArray(formulaString);
 
   // If there is no operator, the total cannnot be calculated
   if (formulaArray.length === 1) {
     return undefined;
   }
 
-  let total = parseInt(formulaArray[0], 10);
+  // Prepend a zero if there is a - before the first number
+  if (formulaArray[0] === '' && formulaArray[1] === '-') {
+    formulaArray.unshift(0);
+  }
+
+  // Set the running total to the first number
+  let total = parseFloat(formulaArray[0], 10);
   let nextOperator = '';
   for (let i = 1, len = formulaArray.length; i < len; i++) {
-    if (Number.isNaN(parseInt(formulaArray[i], 10))) {
+    if (Number.isNaN(parseFloat(formulaArray[i], 10))) {
       // Save the number to perform an operation on
       nextOperator = formulaArray[i];
     } else {
-      const number = parseInt(formulaArray[i], 10);
+      const number = parseFloat(formulaArray[i], 10);
       total = performOperation(number, total, nextOperator);
     }
   }
