@@ -5,9 +5,9 @@ import calculateTotal from '../app/reducers/calculateTotal';
 
 describe('Action Creators', () => {
   it('should contain a "digit was pressed" action which contains the digit', () => {
-    const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    for (let i = 0, len = digits.length; i < len; i++) {
-      const digit = digits[i];
+    const allDigits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    for (let i = 0, len = allDigits.length; i < len; i++) {
+      const digit = allDigits[i];
       const expectedAction = {
         type: 'DIGIT_PRESSED',
         digit,
@@ -67,8 +67,20 @@ describe('Reducers', () => {
     it('should return undefined if there are no operators', () => {
       expect(calculateTotal('123')).toBeUndefined();
     });
-    it('should return two numbers added together when there is a single +', () => {
+    it('should return the sum of two integers when there is a single +', () => {
       expect(calculateTotal('1+2')).toEqual(3);
+    });
+    it('should return the difference of two integers', () => {
+      expect(calculateTotal('5-3')).toEqual(2);
+    });
+    it('should return a negative number if the difference is less than 0', () => {
+      expect(calculateTotal('2-5')).toEqual(-3);
+    });
+    it('should return the product of two numbers if there is a single *', () => {
+      expect(calculateTotal('3*5')).toEqual(15);
+    });
+    it('should return the quotient of two numbers if there is a single /', () => {
+      expect(calculateTotal('12/4')).toEqual(3);
     });
   });
 
