@@ -37,9 +37,9 @@ const createArray = (formulaAsString) => {
 const calculateTotal = (formulaString) => {
   const formulaArray = createArray(formulaString);
 
-  // If there is no operator, the total cannnot be calculated
+  // If there is no operator, the return the string as a number
   if (formulaArray.length === 1) {
-    return undefined;
+    return parseFloat(formulaString);
   }
 
   // Set the running total to the first number

@@ -68,17 +68,16 @@ describe('Reducers', () => {
   // Setup sample state stores for tests to call
   const emptyStore = undefined;
   const smallFormulaStore = { currentTotal: 20, formula: '5+4+6+15-10' };
-  const noOperatorStore = { currentTotal: undefined, formula: '25' };
   // Setup sample actions
-  const digitPressed = { type: 'DIGIT_PRESSED', digit: 8 };
+  const digitPressed = { type: 'DIGIT_PRESSED', digit: '8' };
   const plusPressed = { type: 'OPERATOR_PRESSED', operator: '+' };
   const dividePressed = { type: 'OPERATOR_PRESSED', operator: '/' };
   const periodPressed = { type: 'PERIOD_PRESSED' };
   // #endregion
 
   describe('calculateTotal()', () => {
-    it('should return undefined if there are no operators', () => {
-      expect(calculateTotal('123')).toBeUndefined();
+    it('should return the number if there are no operators', () => {
+      expect(calculateTotal('123')).toEqual(123);
     });
     it('should return the sum of two integers when there is a single +', () => {
       expect(calculateTotal('1+2')).toEqual(3);
@@ -119,11 +118,19 @@ describe('Reducers', () => {
     it('should return the same object if the type is not "DIGIT_PRESSED"', () => {
       expect(digits(smallFormulaStore, plusPressed)).toEqual(smallFormulaStore);
     });
+    it('should add a digit if there is no formula already in the store', () => {
+      expect(digits(emptyStore, digitPressed).formula).toEqual(digitPressed.digit);
+    });
     it('should append the pressed digit to the current formula', () => {
       expect(digits(smallFormulaStore, digitPressed).formula).toEqual(smallFormulaStore.formula + digitPressed.digit);
     });
-    it('should leave total undefined if there are no operators in the formula', () => {
-      expect(digits(noOperatorStore, digitPressed).currentTotal).toBe(undefined);
+    it('should return the current number if there are no operators in the formula', () => {
+      const store = { currentTotal: 25, formula: '25' };
+      const action = { type: 'DIGIT_PRESSED', digit: '6' };
+      expect(digits(store, action).currentTotal).toBe(256);
+    });
+    it('should update the current total', () => {
+      expect(digits(emptyStore, digitPressed).currentTotal).toEqual(8);
     });
   });
 
