@@ -64,6 +64,7 @@ describe('Action Creators', () => {
 });
 
 describe('Reducers', () => {
+  // #region Sample stores and actions
   // Setup sample state stores for tests to call
   const emptyStore = undefined;
   const smallFormulaStore = { currentTotal: 20, formula: '5+4+6+15-10' };
@@ -73,6 +74,7 @@ describe('Reducers', () => {
   const plusPressed = { type: 'OPERATOR_PRESSED', operator: '+' };
   const dividePressed = { type: 'OPERATOR_PRESSED', operator: '/' };
   const periodPressed = { type: 'PERIOD_PRESSED' };
+  // #endregion
 
   describe('calculateTotal()', () => {
     it('should return undefined if there are no operators', () => {
@@ -104,6 +106,9 @@ describe('Reducers', () => {
     });
     it('should accept a negative number as the first number and return the correct total', () => {
       expect(calculateTotal('-2*5')).toEqual(-10);
+    });
+    it('should return an error message if it tries to divide by 0', () => {
+      expect(calculateTotal('5/0')).toEqual('ERROR');
     });
   });
 

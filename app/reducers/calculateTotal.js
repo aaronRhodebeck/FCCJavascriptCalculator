@@ -7,6 +7,9 @@ const performOperation = (number, currentTotal, operator) => {
     case '*':
       return currentTotal * number;
     case '/':
+      if (number === 0) {
+        return 'ERROR';
+      }
       return currentTotal / number;
     default:
       return currentTotal;
@@ -18,9 +21,17 @@ const splitOnNonNumbers = (str) => {
   return str.split(nonDigitsOrDecimalPoint);
 };
 
+const handleLeadingMinusSign = (formulaArray) => {
+  if (formulaArray[0] === '' && formulaArray[1] === '-') {
+    formulaArray.unshift(0);
+  }
+  return formulaArray;
+};
+
 const createArray = (formulaAsString) => {
   let formulaAsArray = splitOnNonNumbers(formulaAsString);
-  formulaAsArray = handleLeadingMinusSign();
+  formulaAsArray = handleLeadingMinusSign(formulaAsArray);
+  return formulaAsArray;
 };
 
 const calculateTotal = (formulaString) => {
@@ -31,14 +42,11 @@ const calculateTotal = (formulaString) => {
     return undefined;
   }
 
-  // Prepend a zero if there is a - before the first number
-  if (formulaArray[0] === '' && formulaArray[1] === '-') {
-    formulaArray.unshift(0);
-  }
-
   // Set the running total to the first number
   let total = parseFloat(formulaArray[0], 10);
   let nextOperator = '';
+
+  // Loop through the array and perform operations
   for (let i = 1, len = formulaArray.length; i < len; i++) {
     if (Number.isNaN(parseFloat(formulaArray[i], 10))) {
       // Save the number to perform an operation on
@@ -48,6 +56,8 @@ const calculateTotal = (formulaString) => {
       total = performOperation(number, total, nextOperator);
     }
   }
+
   return total;
 };
+
 export default calculateTotal;
