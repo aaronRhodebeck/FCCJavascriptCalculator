@@ -15,21 +15,19 @@ const lastEntryIsNotADigitOrDecimalPoint = (formulaString) => {
   return formulaArray[formulaArray.length - 1] === '';
 };
 
-const period = (state = {}, action) => {
+const period = (formula, action) => {
   if (action.type === 'PERIOD_PRESSED') {
-    const newState = { formula: '', currentTotal: state.currentTotal };
-    if (state.formula === undefined) {
-      newState.formula = '0.';
-    } else if (lastEntryIsAnInteger(state.formula)) {
-      newState.formula = state.formula.concat('.');
-    } else if (lastEntryIsNotADigitOrDecimalPoint(state.formula)) {
-      newState.formula = state.formula.concat('0.');
-    } else {
-      newState.formula = state.formula;
+    let newFormula = formula;
+    if (formula === 'undefined') {
+      newFormula = '0.';
+    } else if (lastEntryIsAnInteger(formula)) {
+      newFormula = formula.concat('.');
+    } else if (lastEntryIsNotADigitOrDecimalPoint(formula)) {
+      newFormula = formula.concat('0.');
     }
-    return newState;
+    return newFormula;
   }
-  return state;
+  return formula;
 };
 
 export default period;

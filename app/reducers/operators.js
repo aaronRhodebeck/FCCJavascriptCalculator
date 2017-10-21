@@ -1,20 +1,27 @@
 const checkForOperator = char => char === '+' || '-' || '/' || '*';
 const changeOperatorAtEnd = (formula, newOperator) =>
   formula.slice(0, formula.length - 1).concat(newOperator);
+const handleLeadingOperator = (operator) => {
+  if (operator === '-') {
+    return '0-';
+  }
+  return '';
+};
 
-const operators = (state = {}, action) => {
+const operators = (formula, action) => {
   if (action.type !== 'OPERATOR_PRESSED') {
-    return state;
+    return formula;
   }
 
   let newFormula = '';
-  if (checkForOperator(state.formula.slice(-1)) === true) {
-    newFormula = changeOperatorAtEnd(state.formula, action.operator);
+  if (formula === '' || formula === undefined) {
+    newFormula = handleLeadingOperator(action.operator);
+  } else if (checkForOperator(formula.slice(-1)) === true) {
+    newFormula = changeOperatorAtEnd(formula, action.operator);
   } else {
-    newFormula = state.formula.concat(action.operator);
+    newFormula = formula.concat(action.operator);
   }
-
-  return { formula: newFormula, currentTotal: state.currentTotal };
+  return newFormula;
 };
 
 export default operators;

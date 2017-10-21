@@ -1,10 +1,9 @@
 // #region imports
 import { combineReducers } from 'redux';
 // import all reducers from app
-import digits from './digits';
-import operators from './operators';
-import period from './period';
+import formula from './formula';
+import currentTotal from './currentTotal';
 // #endregion
 
-const rootReducer = combineReducers({ digits, operators, period });
+const rootReducer = combineReducers({ formula, currentTotal });
 export default rootReducer;

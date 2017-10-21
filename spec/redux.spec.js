@@ -1,9 +1,7 @@
 import * as actions from '../app/actions/actionCreators';
 // import reducers
-import digits from '../app/reducers/digits';
-import calculateTotal from '../app/reducers/calculateTotal';
-import operators from '../app/reducers/operators';
-import period from '../app/reducers/period';
+import formula from '../app/reducers/formula';
+import currentTotal from '../app/reducers/currentTotal';
 
 describe('Action Creators', () => {
   it('should contain a "digit was pressed" action which contains the digit', () => {
@@ -64,119 +62,112 @@ describe('Action Creators', () => {
 });
 
 describe('Reducers', () => {
-  // #region Sample stores and actions
-  // Setup sample state stores for tests to call
-  const emptyStore = undefined;
-  const smallFormulaStore = { currentTotal: 20, formula: '5+4+6+15-10' };
-  // Setup sample actions
-  const digitPressed = { type: 'DIGIT_PRESSED', digit: '8' };
-  const plusPressed = { type: 'OPERATOR_PRESSED', operator: '+' };
-  const dividePressed = { type: 'OPERATOR_PRESSED', operator: '/' };
-  const periodPressed = { type: 'PERIOD_PRESSED' };
-  // #endregion
+  //   // #region Sample stores and actions
+  //   // Setup sample state stores for tests to call
+  //   const emptyStore = undefined;
+  //   const smallFormulaStore = { currentTotal: 20, formula: '5+4+6+15-10' };
+  //   // Setup sample actions
+  //   const digitPressed = { type: 'DIGIT_PRESSED', digit: '8' };
+  //   const plusPressed = { type: 'OPERATOR_PRESSED', operator: '+' };
+  //   const dividePressed = { type: 'OPERATOR_PRESSED', operator: '/' };
+  //   const periodPressed = { type: 'PERIOD_PRESSED' };
+  //   // #endregion
 
-  describe('calculateTotal()', () => {
-    it('should return the number if there are no operators', () => {
-      expect(calculateTotal('123')).toEqual(123);
-    });
-    it('should return the sum of two integers when there is a single +', () => {
-      expect(calculateTotal('1+2')).toEqual(3);
-    });
-    it('should return the difference of two integers', () => {
-      expect(calculateTotal('5-3')).toEqual(2);
-    });
-    it('should return a negative number if the difference is less than 0', () => {
-      expect(calculateTotal('2-5')).toEqual(-3);
-    });
-    it('should return the product of two numbers if there is a single *', () => {
-      expect(calculateTotal('3*5')).toEqual(15);
-    });
-    it('should return the quotient of two numbers if there is a single /', () => {
-      expect(calculateTotal('12/4')).toEqual(3);
-    });
-    it('should return the correct total from a formula with basic arithmatic, ignoring the order of operations', () => {
-      expect(calculateTotal('10/5*2+20-10')).toEqual(14);
-    });
-    it('should return a decimal number when necessary', () => {
-      expect(calculateTotal('5/2')).toEqual(2.5);
-    });
-    it('should accept a decimal number and return the correct total', () => {
-      expect(calculateTotal('2.5*10')).toEqual(25);
-    });
-    it('should accept a negative number as the first number and return the correct total', () => {
-      expect(calculateTotal('-2*5')).toEqual(-10);
-    });
-    it('should return an error message if it tries to divide by 0', () => {
-      expect(calculateTotal('5/0')).toEqual('ERROR');
-    });
-  });
+  // All the acceptable inputs, to loop over for tests
+  const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+  const operators = ['+', '-', '*', '/'];
 
-  describe('digits()', () => {
-    it('should return an empty object if the store does not exist and the type is not "DIGIT_PRESSED"', () => {
-      expect(digits(emptyStore, plusPressed)).toEqual({});
-    });
-    it('should return the same object if the type is not "DIGIT_PRESSED"', () => {
-      expect(digits(smallFormulaStore, plusPressed)).toEqual(smallFormulaStore);
+  describe('formula()', () => {
+    it('should return a string', () => {
+      expect(typeof formula({}, {})).toEqual('string');
     });
     it('should add a digit if there is no formula already in the store', () => {
-      expect(digits(emptyStore, digitPressed).formula).toEqual(digitPressed.digit);
+      const store = {};
+      for (let i = 0, len = digits.length; i < len; i++) {
+        const action = { type: 'DIGIT_PRESSED', digit: digits[i] };
+        expect(formula(store, action)).toEqual(digits[i].toString());
+      }
     });
-    it('should append the pressed digit to the current formula', () => {
-      expect(digits(smallFormulaStore, digitPressed).formula).toEqual(smallFormulaStore.formula + digitPressed.digit);
-    });
-    it('should return the current number if there are no operators in the formula', () => {
-      const store = { currentTotal: 25, formula: '25' };
-      const action = { type: 'DIGIT_PRESSED', digit: '6' };
-      expect(digits(store, action).currentTotal).toBe(256);
-    });
-    it('should update the current total', () => {
-      expect(digits(emptyStore, digitPressed).currentTotal).toEqual(8);
-    });
-  });
-
-  describe('operators()', () => {
-    it('should return an empty object if the store does not exist and the type is not "OPERATOR_PRESSED"', () => {
-      expect(operators(emptyStore, digitPressed)).toEqual({});
-    });
-    it('should return the same object if the action type is not "OPERATOR_PRESSED', () => {
-      expect(operators(smallFormulaStore, digitPressed)).toEqual(smallFormulaStore);
-    });
-    it('should return a new object if the action type is "OPERATOR_PRESSED"', () => {
-      expect(operators(smallFormulaStore, plusPressed)).not.toBe(smallFormulaStore);
+    it('should append a digit if there is a formula in the store', () => {
+      const store = { formula: '5-6+89', currentTotal: 88 };
+      for (let i = 0, len = digits.length; i < len; i++) {
+        const action = { type: 'DIGIT_PRESSED', digit: digits[i] };
+        expect(formula(store, action)).toBe(store.formula.concat(digits[i]));
+      }
     });
     it('should add the operator to the formula if there is not an operator already at the end', () => {
-      expect(operators(smallFormulaStore, plusPressed).formula).toEqual(smallFormulaStore.formula.concat('+'));
-      expect(operators(smallFormulaStore, dividePressed).formula).toEqual(smallFormulaStore.formula.concat('/'));
+      const store = { formula: '1+3-2', total: 0 };
+      for (let i = 0, len = operators.length; i < len; i++) {
+        const action = { type: 'OPERATOR_PRESSED', operator: operators[i] };
+        expect(formula(store, action)).toEqual(store.formula.concat(action.operator));
+      }
     });
-    it('should change the operator if the formula ends in an operator', () => {
-      const store = { formula: '10+30-20+', total: 20 };
-      expect(operators(store, dividePressed).formula).toEqual('10+30-20/');
+    it('should change the operator if the formula already ends in an operator', () => {
+      const store = { formula: '4+5+', currentTotal: 9 };
+      for (let i = 0, len = operators.length; i < len; i++) {
+        const action = { type: 'OPERATOR_PRESSED', operator: operators[i] };
+        expect(formula(store, action)).toBe(store.formula.slice(0, -1).concat(operators[i]));
+      }
     });
-    it('should return the same total', () => {
-      expect(operators(smallFormulaStore, dividePressed).currentTotal).toEqual(smallFormulaStore.currentTotal);
+    it('should append a decimal point if there is an integer at the end of the formula', () => {
+      const store = { formula: '10+45', currentTotal: 55 };
+      const action = { type: 'PERIOD_PRESSED' };
+      expect(formula(store, action)).toBe(store.formula.concat('.'));
+    });
+    it('should not append a decimal point if the number at the end already has a decimal point', () => {
+      const store = { formula: '12.5 + 16.3', currentTotal: 28.8 };
+      const action = { type: 'PERIOD_PRESSED' };
+      expect(formula(store, action)).toBe(store.formula);
+    });
+    it('should append a 0 and a decimal point if the store is empty', () => {
+      const store = {};
+      const action = { type: 'PERIOD_PRESSED' };
+      expect(formula(store, action)).toBe('0.');
+    });
+    it('should append a 0 and a decimal point if there is an operator at the end of the formula', () => {
+      const store = { formula: '3-4*', total: -1 };
+      const action = { type: 'PERIOD_PRESSED' };
+      expect(formula(store, action)).toBe(store.formula.concat('0.'));
+    });
+    it('should return 0- if the there is no formula and the minus sign is pressed', () => {
+      const store = {};
+      const action = { type: 'OPERATOR_PRESSED', operator: '-' };
+      expect(formula(store, action)).toBe('0-');
+    });
+    it('should ignore operators other than - if the store is empty', () => {
+      const store = {};
+      const action = { type: 'OPERATOR_PRESSED', operator: '*' };
+      expect(formula(store, action)).toBe('');
     });
   });
 
-  describe('period()', () => {
-    it('should return an empty object if the store is empty and the type is not "PERIOD_PRESSED', () => {
-      expect(period(emptyStore, digitPressed)).toEqual({});
+  describe('currentTotal()', () => {
+    it('should return the digit if the store is empty and a digit is pressed', () => {
+      const store = {};
+      for (let i = 0, len = digits.length; i < len; i++) {
+        const action = { type: 'DIGIT_PRESSED', digit: digits[i] };
+        expect(currentTotal(store, action)).toBe(digits[i]);
+      }
     });
-    it('should return the same object if the type is not "PERIOD_PRESSED"', () => {
-      expect(period(smallFormulaStore, digitPressed)).toEqual(smallFormulaStore);
+    it('should update the total when a digit is pressed', () => {
+      const store = { formula: '10+90', currentTotal: 100 };
+      const action = { type: 'DIGIT_PRESSED', digit: 8 };
+      expect(currentTotal(store, action)).toBe(918);
     });
-    it('should return the formula with a decimal point appended if the last entry is an integer', () => {
-      expect(period(smallFormulaStore, periodPressed).formula).toEqual(smallFormulaStore.formula.concat('.'));
+    it('should return the correct total for the formula that is in the store', () => {
+      const store = { formula: '40+30-20/10', currentTotal: 0 };
+      const action = { type: 'DIGIT_PRESSED', digit: 9 };
+      expect(currentTotal(store, action));
     });
-    it('should add a 0 and a decimal point if the store is empty', () => {
-      expect(period(emptyStore, periodPressed).formula).toEqual('0.');
+    it('should return the same total when an operator is pressed', () => {
+      const store = { formula: '10+32', currentTotal: 42 };
+      const action = { type: 'OPERATOR_PRESSED', operator: '-' };
+      expect(currentTotal(store, action)).toBe(store.currentTotal);
     });
-    it('should add a 0 and a decimal point if the last entry is an operator', () => {
-      const store = { formula: '10-5+12*', currentTotal: 17 };
-      expect(period(store, periodPressed).formula).toEqual(store.formula.concat('0.'));
-    });
-    it('should not add a decimal point if the last entry is a decimal number', () => {
-      const store = { formula: '1+2+4.5', currentTotal: 7.5 };
-      expect(period(store, periodPressed).formula).toEqual(store.formula);
+    it('should return the same total when period is pressed', () => {
+      const store = { formula: '10+32', currentTotal: 42 };
+      const action = { type: 'PERIOD_PRESSED' };
+      expect(currentTotal(store, action)).toBe(store.currentTotal);
     });
   });
 });
