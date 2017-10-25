@@ -6,6 +6,7 @@ describe('runCalculator', () => {
     operator: { type: 'OPERATOR_PRESSED', operator: '' },
     period: { type: 'PERIOD_PRESSED' },
     equals: { type: 'EQUALS_PRESSED' },
+    clearAll: { type: 'CLEAR_ALL' },
   };
   const operators = ['-', '+', '*', '/'];
   const defaultState = { formula: '', total: 0, currentEntry: '0' };
@@ -131,6 +132,14 @@ describe('runCalculator', () => {
     it('should change the current entry to "0." if the formula ends in an operator', () => {
       const state = { formula: '33/', total: 33, currentEntry: '0' };
       expect(calculate(state, action).currentEntry).toBe('0.');
+    });
+  });
+
+  describe('When clear all is pressed', () => {
+    const action = actions.clearAll;
+    it('should return the default state', () => {
+      const state = { formula: '20+30-4', total: 44, currentEntry: '4' };
+      expect(calculate(state, action)).toEqual(defaultState);
     });
   });
 });
