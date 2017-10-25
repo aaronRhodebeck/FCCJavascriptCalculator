@@ -35,6 +35,11 @@ const createArray = (formulaAsString) => {
 };
 
 const calculateTotal = (formulaString) => {
+  // If the string is empty return 0
+  if (formulaString === '') {
+    return 0;
+  }
+
   const formulaArray = createArray(formulaString);
 
   // If there is no operator, then return the string as a number

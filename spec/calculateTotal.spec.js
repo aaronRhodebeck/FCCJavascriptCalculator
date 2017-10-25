@@ -1,6 +1,9 @@
 import calculateTotal from '../app/reducers/calculateTotal';
 
 describe('currentTotal()', () => {
+  it('should return zero if the formula string is blank', () => {
+    expect(calculateTotal('')).toBe(0);
+  });
   it('should return the number if there are no operators', () => {
     expect(calculateTotal('123')).toEqual(123);
   });

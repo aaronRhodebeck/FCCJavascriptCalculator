@@ -1,9 +1,8 @@
 // #region imports
 import { combineReducers } from 'redux';
 // import all reducers from app
-import formula from './formula';
-import currentTotal from './currentTotal';
+import calculate from './runCalculator';
 // #endregion
 
-const rootReducer = combineReducers({ formula, currentTotal });
+const rootReducer = combineReducers({ calculate });
 export default rootReducer;
