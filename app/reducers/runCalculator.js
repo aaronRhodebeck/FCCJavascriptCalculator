@@ -1,18 +1,11 @@
 import calculateTotal from './calculateTotal';
+import handleOperators from './handleOperators';
 
 // #region Helper methods
 const appendDigitTo = (formula, digit) => formula.concat(digit);
 const updateCurrentEntry = (currentEntry, digit) =>
   (currentEntry === '0' ? digit.toString() : currentEntry.concat(digit));
-const appendOperatorTo = (formula, operator) => formula.concat(operator);
-const operatorPressedFirst = (operator) => {
-  if (operator === '-') {
-    return '-';
-  }
-  return '';
-};
 const formulaDoesNotEndWithDigit = formula => formula.match(/[^0-9.]$/) !== null;
-const changeOperatorAtEnd = (formula, operator) => formula.slice(0, -1).concat(operator);
 const appendDecimalPointTo = formula => formula.concat('.');
 const formulaEndsInDecimalNumber = (formula) => {
   const array = formula.split(/[^0-9.}]/);
@@ -40,14 +33,9 @@ const calculate = (state = { formula: '', currentEntry: '0' }, action) => {
       currentEntry = updateCurrentEntry(state.currentEntry, action.digit);
       break;
     case 'OPERATOR_PRESSED':
-      currentEntry = '0';
-      if (state.formula === '') {
-        newFormula = operatorPressedFirst(action.operator);
-      } else if (formulaDoesNotEndWithDigit(state.formula)) {
-        newFormula = changeOperatorAtEnd(state.formula, action.operator);
-      } else {
-        newFormula = appendOperatorTo(state.formula, action.operator);
-      }
+      const newState = handleOperators(state, action);
+      newFormula = newState.formula;
+      currentEntry = newState.currentEntry;
       break;
     case 'PERIOD_PRESSED':
       if (formulaEndsInDecimalNumber(state.formula)) {
