@@ -9,7 +9,12 @@ describe('runCalculator', () => {
     clearAll: { type: 'CLEAR_ALL' },
   };
   const operators = ['-', '+', '*', '/'];
-  const defaultState = { formula: '', total: 0, currentEntry: '0' };
+  const defaultState = {
+    formula: '',
+    total: 0,
+    currentEntry: '0',
+    showEntry: false,
+  };
   const defaultAction = { type: '' };
 
   it('should return an object that represents the state of the app', () => {
@@ -19,6 +24,7 @@ describe('runCalculator', () => {
         'formula',
         'total',
         'currentEntry',
+        'showEntry',
       ]);
     });
   });
@@ -52,6 +58,11 @@ describe('runCalculator', () => {
       const state = { formula: '10+20+30+', total: 60, currentEntry: '0' };
       expect(calculate(state, action).currentEntry).toBe(action.digit.toString());
     });
+    it('should update set showEntry to true', () => {
+      const state = Object.create(defaultState);
+      state.showEntry = false;
+      expect(calculate(state, action).showEntry).toBe(true);
+    });
   });
 
   describe('When an operator is pressed', () => {
@@ -63,6 +74,11 @@ describe('runCalculator', () => {
         action.operator = operators[i];
         expect(calculate(state, action).formula).toBe(`2${operators[i]}`);
       }
+    });
+    it('should set showEntry to false', () => {
+      const state = Object.create(defaultState);
+      state.showEntry = true;
+      expect(calculate(state, action).showEntry).toBe(false);
     });
     it('should change the current entry to "0"', () => {
       const state = { formula: '21', total: 21, currentEntry: '21' };
@@ -100,6 +116,11 @@ describe('runCalculator', () => {
     it('should append a decimal point to the formula', () => {
       const state = { formula: '12.3+25', total: '37.3', currentEntry: '25' };
       expect(calculate(state, action).formula).toBe(state.formula.concat('.'));
+    });
+    it('should set showEntry to true', () => {
+      const state = Object.create(defaultState);
+      state.showEntry = false;
+      expect(calculate(state, action).showEntry).toBe(true);
     });
     it('should not change the total', () => {
       const state = { formula: '20-15', total: 5, currentEntry: '15' };
