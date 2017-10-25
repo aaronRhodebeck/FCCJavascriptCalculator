@@ -27,14 +27,17 @@ class Main extends React.Component {
       digitWasPressed,
       periodWasPressed,
       equalsWasPressed,
-      clearWasPressed,
+      clearAll,
       backspaceWasPressed,
+      showEntry,
     } = this.props;
+
+    const mainNumber = showEntry ? currentEntry : total;
     return (
       <Calculator>
-        <DisplayContainer formula={formula} total={total} />
+        <DisplayContainer formula={formula} mainNumber={mainNumber} />
         <ButtonArea>
-          <CalcButton onClick={clearWasPressed}>ClearAll</CalcButton>
+          <CalcButton onClick={clearAll}>ClearAll</CalcButton>
           <CalcButton onClick={backspaceWasPressed}>&#x21CD;</CalcButton>
           <CalcButton onClick={() => operatorWasPressed('+')}>+</CalcButton>
           <CalcButton onClick={() => operatorWasPressed('-')}>-</CalcButton>

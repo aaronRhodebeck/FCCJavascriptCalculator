@@ -6,7 +6,7 @@ class DisplayContainer extends React.Component {
     return (
       <Display>
         <DisplayFormula>{this.props.formula}</DisplayFormula>
-        <DisplayResult>{this.props.total}</DisplayResult>
+        <DisplayResult>{this.props.mainNumber}</DisplayResult>
       </Display>
     );
   }
