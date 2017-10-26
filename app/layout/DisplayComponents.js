@@ -46,6 +46,10 @@ export const Display = styled.div`
   margin: 5px;
   background: radial-gradient(at top left, #ddd, #eee);
   position: relative;
+<<<<<<< HEAD
+=======
+  overflow: hidden;
+>>>>>>> layout
 `;
 
 export const DisplayResult = styled.p`
