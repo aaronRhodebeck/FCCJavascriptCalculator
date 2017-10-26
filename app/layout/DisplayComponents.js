@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 // Outer structure of the calculator
 export const Calculator = styled.div`
@@ -48,10 +46,7 @@ export const Display = styled.div`
   margin: 5px;
   background: radial-gradient(at top left, #ddd, #eee);
   position: relative;
-<<<<<<< HEAD
   overflow: hidden;
-=======
->>>>>>> Add result and formula basic layout component, layout finished
 `;
 
 export const DisplayResult = styled.p`
@@ -71,12 +66,7 @@ export const DisplayFormula = styled.p`
   top: 5%;
   right: 10px;
   margin: 0;
-<<<<<<< HEAD
 `;
-=======
-import theme from './theme';
-=======
->>>>>>> Create grayscale layout of calculator
 
 // Outer structure of the calculator
 export const Calculator = styled.div`
@@ -106,10 +96,6 @@ export const ButtonArea = styled.div`
   bottom: 0;
 `;
 
-<<<<<<< HEAD
-export const display = styled.div;
->>>>>>> WIP Switch context
-=======
 export const CalcButton = styled.button`
   margin: 3px;
   min-width: 23%;
@@ -127,7 +113,4 @@ export const Display = styled.div`
   border: 3px inset darkgray;
   margin: 5px;
   background: radial-gradient(at top left, #ddd, #eee);
-=======
->>>>>>> Add result and formula basic layout component, layout finished
-`;
->>>>>>> Create grayscale layout of calculator
+`
