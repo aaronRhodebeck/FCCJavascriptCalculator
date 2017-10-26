@@ -16,7 +16,34 @@ class Main extends React.Component {
     document.removeEventListener('keydown');
   }
 
-  handleKeyDown(e) {}
+  handleKeyDown(e) {
+    const keyPressed = e.key;
+    const {
+      operatorWasPressed,
+      digitWasPressed,
+      periodWasPressed,
+      equalsWasPressed,
+      clearAll,
+      backspace,
+    } = this.props;
+
+    const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const operators = ['+', '-', '*', '/'];
+
+    if (keyPressed === '.') {
+      periodWasPressed();
+    } else if (keyPressed === 'Escape') {
+      clearAll();
+    } else if (keyPressed === 'Backspace') {
+      backspace();
+    } else if (keyPressed === '=' || keyPressed === 'Enter') {
+      equalsWasPressed();
+    } else if (digits.includes(keyPressed)) {
+      digitWasPressed(keyPressed);
+    } else if (operators.includes(keyPressed)) {
+      operatorWasPressed(keyPressed);
+    }
+  }
 
   render() {
     let {
@@ -41,6 +68,7 @@ class Main extends React.Component {
     } else {
       mainNumber = Math.round(mainNumber * 1000000) / 1000000;
     }
+
     return (
       <Calculator>
         <DisplayContainer formula={formula} mainNumber={mainNumber} />
