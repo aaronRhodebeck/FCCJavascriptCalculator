@@ -41,7 +41,6 @@ const calculateTotal = (formulaString) => {
   }
 
   const formulaArray = createArray(formulaString);
-
   // If there is no operator, then return the string as a number
   if (formulaArray.length === 1) {
     return parseFloat(formulaString);
