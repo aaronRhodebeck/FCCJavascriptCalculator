@@ -111,6 +111,17 @@ describe('runCalculator', () => {
         expect(calculate(state, action).total).toBe(30);
       }
     });
+    it('should change the formula to the total when pressed immediatly after =', () => {
+      const state = {
+        formula: '12*56-43+89',
+        total: 718,
+        currentEntry: '89',
+        showEntry: false,
+        showFormula: false,
+      };
+      action.operator = '*';
+      expect(calculate(state, action).formula).toBe(state.total.toString().concat(action.operator));
+    });
   });
 
   describe('When decimal point is pressed', () => {
@@ -167,7 +178,7 @@ describe('runCalculator', () => {
     });
   });
 
-  describe('When clear entry is pressed', () => {
+  describe('When backspace is pressed', () => {
     const action = actions.backspace;
 
     it('should remove the last character in the formula', () => {
@@ -181,6 +192,16 @@ describe('runCalculator', () => {
     it('should remove the last digit from the current entry', () => {
       const state = { formula: '34-12+565', total: 587, currentEntry: '587' };
       expect(calculate(state, action).currentEntry).toBe(state.currentEntry.slice(0, -1));
+    });
+    it('should set show formula to true', () => {
+      const state = {
+        formula: '45*67-15',
+        total: 3000,
+        currentEntry: '15',
+        showEntry: false,
+        showFormula: false,
+      };
+      expect(calculate(state, action).showFormula).toBe(true);
     });
   });
 

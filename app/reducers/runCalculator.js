@@ -31,8 +31,9 @@ const calculate = (state = { formula: '', currentEntry: '0' }, action) => {
       showEntry = false;
       break;
     case 'EQUALS_PRESSED':
-      showFormula = false;
       showEntry = false;
+      // Used to indicate equals was last button pressed
+      showFormula = false;
       break;
     default:
       break;

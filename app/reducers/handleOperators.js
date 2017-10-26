@@ -9,12 +9,16 @@ const changeOperatorAtEnd = (formula, operator) => formula.slice(0, -1).concat(o
 const appendOperatorTo = (formula, operator) => formula.concat(operator);
 
 const handleOperators = (state, action) => {
-  let { formula, total, currentEntry } = state;
+  let { formula, currentEntry } = state;
+  const { showFormula, total } = state;
+
   currentEntry = '0';
   if (state.formula === '') {
     formula = operatorPressedFirst(action.operator);
   } else if (formulaDoesNotEndWithDigit(formula)) {
     formula = changeOperatorAtEnd(formula, action.operator);
+  } else if (showFormula === false) {
+    formula = total.toString().concat(action.operator);
   } else {
     formula = appendOperatorTo(formula, action.operator);
   }
