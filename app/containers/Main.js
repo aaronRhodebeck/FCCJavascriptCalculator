@@ -36,6 +36,7 @@ class Main extends React.Component {
     let mainNumber = showEntry ? currentEntry : total;
     formula = showFormula ? formula : '';
     if (mainNumber > 99999999 || (mainNumber < 0.00001 && mainNumber > 0)) {
+      mainNumber = parseFloat(mainNumber);
       mainNumber = mainNumber.toExponential(4);
     } else {
       mainNumber = Math.round(mainNumber * 1000000) / 1000000;
