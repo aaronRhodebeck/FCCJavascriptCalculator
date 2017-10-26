@@ -19,7 +19,7 @@ class Main extends React.Component {
   handleKeyDown(e) {}
 
   render() {
-    const {
+    let {
       formula,
       currentEntry,
       total,
@@ -28,17 +28,19 @@ class Main extends React.Component {
       periodWasPressed,
       equalsWasPressed,
       clearAll,
-      backspaceWasPressed,
+      backspace,
       showEntry,
+      showFormula,
     } = this.props;
 
     const mainNumber = showEntry ? currentEntry : total;
+    formula = showFormula ? formula : '';
     return (
       <Calculator>
         <DisplayContainer formula={formula} mainNumber={mainNumber} />
         <ButtonArea>
           <CalcButton onClick={clearAll}>ClearAll</CalcButton>
-          <CalcButton onClick={backspaceWasPressed}>&#x21CD;</CalcButton>
+          <CalcButton onClick={backspace}>&#x21CD;</CalcButton>
           <CalcButton onClick={() => operatorWasPressed('+')}>+</CalcButton>
           <CalcButton onClick={() => operatorWasPressed('-')}>-</CalcButton>
           <CalcButton onClick={() => operatorWasPressed('*')}>*</CalcButton>

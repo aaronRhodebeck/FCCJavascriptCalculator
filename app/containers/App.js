@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
   total: state.calculate.total,
   currentEntry: state.calculate.currentEntry,
   showEntry: state.calculate.showEntry,
+  showFormula: state.calculate.showFormula,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
