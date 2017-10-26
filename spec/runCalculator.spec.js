@@ -7,6 +7,7 @@ describe('runCalculator', () => {
     period: { type: 'PERIOD_PRESSED' },
     equals: { type: 'EQUALS_PRESSED' },
     clearAll: { type: 'CLEAR_ALL' },
+    backspace: { type: 'BACKSPACE_PRESSED' },
   };
   const operators = ['-', '+', '*', '/'];
   const defaultState = {
@@ -14,6 +15,7 @@ describe('runCalculator', () => {
     total: 0,
     currentEntry: '0',
     showEntry: false,
+    showFormula: true,
   };
   const defaultAction = { type: '' };
 
@@ -25,6 +27,7 @@ describe('runCalculator', () => {
         'total',
         'currentEntry',
         'showEntry',
+        'showFormula',
       ]);
     });
   });
@@ -161,6 +164,47 @@ describe('runCalculator', () => {
     it('should return the default state', () => {
       const state = { formula: '20+30-4', total: 44, currentEntry: '4' };
       expect(calculate(state, action)).toEqual(defaultState);
+    });
+  });
+
+  describe('When clear entry is pressed', () => {
+    const action = actions.backspace;
+
+    it('should remove the last character in the formula', () => {
+      const state = { formula: '21/7+9*3', total: 36, currentEntry: '3' };
+      expect(calculate(state, action).formula).toBe(state.formula.slice(0, -1));
+    });
+    it('should not change the formula if it ends in an operator', () => {
+      const state = { formula: '12*5/6+', total: 10, currentEntry: '0' };
+      expect(calculate(state, action).formula).toBe(state.formula);
+    });
+    it('should remove the last digit from the current entry', () => {
+      const state = { formula: '34-12+565', total: 587, currentEntry: '587' };
+      expect(calculate(state, action).currentEntry).toBe(state.currentEntry.slice(0, -1));
+    });
+  });
+
+  describe('When equals is pressed', () => {
+    const action = actions.equals;
+
+    it('should change show entry to false', () => {
+      const state = {
+        formula: '23+15-89*76',
+        total: -3876,
+        currentEntry: '76',
+        showEntry: true,
+      };
+      expect(calculate(state, action).showEntry).toBe(false);
+    });
+    it('should hide the formula', () => {
+      const state = {
+        formula: '42+10-8',
+        total: 44,
+        currentEntry: '8',
+        showEntry: true,
+        showFormula: true,
+      };
+      expect(calculate(state, action).showFormula).toBe(false);
     });
   });
 });
