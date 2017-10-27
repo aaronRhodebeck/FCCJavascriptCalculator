@@ -43,7 +43,9 @@ export const Display = styled.div`
   }
 `;
 
-export const DisplayResult = styled.p`
+export const DisplayResult = styled.p.attrs({
+  id: 'display',
+})`
   font-weight: bold;
   font-size: 2.5em;
   position: absolute;

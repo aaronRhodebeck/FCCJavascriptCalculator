@@ -83,28 +83,62 @@ class Main extends React.Component {
         <DisplayContainer formula={formula} mainNumber={mainNumber} />
         <ButtonArea>
           <ClearRow>
-            <ClearAllButton onClick={clearAll}>Clear All</ClearAllButton>
+            <ClearAllButton id="clear" onClick={clearAll}>
+              Clear All
+            </ClearAllButton>
             <CalcButton onClick={backspace}>&#x21CD;</CalcButton>
           </ClearRow>
           <OperatorsColumn>
-            <CalcButton onClick={() => operatorWasPressed('+')}>+</CalcButton>
-            <CalcButton onClick={() => operatorWasPressed('-')}>-</CalcButton>
-            <CalcButton onClick={() => operatorWasPressed('*')}>*</CalcButton>
-            <CalcButton onClick={() => operatorWasPressed('/')}>/</CalcButton>
-            <CalcButton onClick={equalsWasPressed}>=</CalcButton>
+            <CalcButton id="add" onClick={() => operatorWasPressed('+')}>
+              +
+            </CalcButton>
+            <CalcButton id="subtract" onClick={() => operatorWasPressed('-')}>
+              -
+            </CalcButton>
+            <CalcButton id="multiply" onClick={() => operatorWasPressed('*')}>
+              *
+            </CalcButton>
+            <CalcButton id="divide" onClick={() => operatorWasPressed('/')}>
+              /
+            </CalcButton>
+            <CalcButton id="equals" onClick={equalsWasPressed}>
+              =
+            </CalcButton>
           </OperatorsColumn>
           <DigitsArea>
-            <CalcButton onClick={() => digitWasPressed('1')}>1</CalcButton>
-            <CalcButton onClick={() => digitWasPressed('2')}>2</CalcButton>
-            <CalcButton onClick={() => digitWasPressed('3')}>3</CalcButton>
-            <CalcButton onClick={() => digitWasPressed('4')}>4</CalcButton>
-            <CalcButton onClick={() => digitWasPressed('5')}>5</CalcButton>
-            <CalcButton onClick={() => digitWasPressed('6')}>6</CalcButton>
-            <CalcButton onClick={() => digitWasPressed('7')}>7</CalcButton>
-            <CalcButton onClick={() => digitWasPressed('8')}>8</CalcButton>
-            <CalcButton onClick={() => digitWasPressed('9')}>9</CalcButton>
-            <ZeroButton onClick={() => digitWasPressed('0')}>0</ZeroButton>
-            <CalcButton onClick={periodWasPressed}>.</CalcButton>
+            <CalcButton id="one" onClick={() => digitWasPressed('1')}>
+              1
+            </CalcButton>
+            <CalcButton id="two" onClick={() => digitWasPressed('2')}>
+              2
+            </CalcButton>
+            <CalcButton id="three" onClick={() => digitWasPressed('3')}>
+              3
+            </CalcButton>
+            <CalcButton id="four" onClick={() => digitWasPressed('4')}>
+              4
+            </CalcButton>
+            <CalcButton id="five" onClick={() => digitWasPressed('5')}>
+              5
+            </CalcButton>
+            <CalcButton id="six" onClick={() => digitWasPressed('6')}>
+              6
+            </CalcButton>
+            <CalcButton id="seven" onClick={() => digitWasPressed('7')}>
+              7
+            </CalcButton>
+            <CalcButton id="eight" onClick={() => digitWasPressed('8')}>
+              8
+            </CalcButton>
+            <CalcButton id="nine" onClick={() => digitWasPressed('9')}>
+              9
+            </CalcButton>
+            <ZeroButton id="zero" onClick={() => digitWasPressed('0')}>
+              0
+            </ZeroButton>
+            <CalcButton id="decimal" onClick={periodWasPressed}>
+              .
+            </CalcButton>
           </DigitsArea>
         </ButtonArea>
       </Calculator>
