@@ -73,14 +73,17 @@ export const ButtonArea = styled.div`
 
 export const ClearRow = styled.div`
   display: flex;
-  width: 79%;
-  height: 20%;
+  width: 75%;
+  height: 19%;
   justify-content: center;
+  position: absolute;
+  top: 2%;
+  left: 2%;
 `;
 
 export const OperatorsColumn = styled.div`
   top: 10%;
-  right: 1%;
+  right: 1.2%;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -95,8 +98,11 @@ export const DigitsArea = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 79%;
-  height: 80%;
+  width: 75%;
+  height: 77%;
+  position: absolute;
+  bottom: 2%;
+  left: 2%;
 `;
 
 export const CalcButton = styled.button`
@@ -111,6 +117,7 @@ export const CalcButton = styled.button`
   font-family: sans-serif;
   font-size: 1.8em;
   flex: 1 1 auto;
+  color: rgb(20, 20, 20);
 
   &:active {
     border: 3px inset rgb(50, 50, 70);
