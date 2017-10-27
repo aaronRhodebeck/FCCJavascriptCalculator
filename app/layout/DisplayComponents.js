@@ -17,7 +17,7 @@ export const Calculator = styled.div`
   position: relative;
   min-height: 500px;
   min-width: 312px;
-  background: rgb(240, 240, 255);
+  background: hsl(200, 15%, 80%);
   box-shadow: 2px 4px 10px 6px rgba(50, 50, 70, 0.3);
 
   /* Set all children to have their size set to 
@@ -33,7 +33,7 @@ export const Display = styled.div`
   height: 25%;
   border: 3px inset darkgray;
   margin: 5px;
-  background: radial-gradient(at top left, #ddd, #eee);
+  background: radial-gradient(at top left, rgb(200, 200, 200), rgb(230, 230, 230));
   position: relative;
   overflow: hidden;
   font-size: 5vh;
@@ -47,7 +47,7 @@ export const DisplayResult = styled.p`
   font-weight: bold;
   font-size: 2.5em;
   position: absolute;
-  bottom: 3%;
+  bottom: 4%;
   right: 8px;
   margin: 0;
   line-height: 70%;
@@ -87,7 +87,7 @@ export const OperatorsColumn = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  width: 21%;
+  width: 22%;
   height: 80%;
   justify-content: center;
 `;
@@ -127,6 +127,7 @@ export const CalcButton = styled.button`
 export const ClearAllButton = styled(CalcButton)`
   white-space: nowrap;
   flex: 2 1 auto;
+  color: hsl(10, 70%, 30%);
 `;
 
 export const ZeroButton = styled(CalcButton)`flex: 2 1 auto;`;
